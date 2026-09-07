@@ -1,0 +1,16 @@
+TRIPAN V10 Local Planner Fix
+
+Fixed:
+1. ReferenceError: buildCandidatePlaces is not defined
+2. ReferenceError: normalizePlaceKey is not defined
+3. Local planner now merges/deduplicates Supabase places with the 15-place curated fallback catalogue per destination.
+4. Removed hardcoded Supabase URL/key and hardcoded JWT secret fallback. Credentials must come from .env.
+5. Updated stale V8 browser title/label to V10.
+
+Important:
+- This build does NOT use Gemini. The itinerary planner is local/rule-based.
+- Copy your existing .env into the project root. Do NOT share the .env file.
+- Then run:
+  npm install
+  npm run dev
+- Open http://localhost:3000

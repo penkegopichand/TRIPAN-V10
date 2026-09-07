@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
+<defs>
+  <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dff4b0"/><stop offset=".55" stop-color="#9fd9c2"/><stop offset="1" stop-color="#0c6b4f"/></linearGradient>
+  <radialGradient id="r"><stop stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="700" fill="url(#g)"/>
+<circle cx="950" cy="130" r="220" fill="url(#r)"/>
+<path d="M0 520 C180 390 300 610 480 500 S800 420 1200 560 V700 H0Z" fill="#0c6b4f" opacity=".55"/>
+<path d="M0 580 C200 470 340 650 570 545 S900 500 1200 610 V700 H0Z" fill="#083f31" opacity=".45"/>
+<text x="70" y="105" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#fff" opacity=".9">TRIPAN</text>
+<text x="70" y="610" font-family="Arial,sans-serif" font-size="56" font-weight="800" fill="#fff">Destination image</text>
+<text x="70" y="655" font-family="Arial,sans-serif" font-size="24" fill="#fff" opacity=".85">Explore India with TRIPAN</text>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "name": "tripan",
+  "version": "10.0.0",
+  "description": "TRIPAN Smart Tourism Platform - SIH prototype V10 with Supabase and local smart itinerary planning",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.115.0",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "dotenv": "^17.2.2"
+  }
+}

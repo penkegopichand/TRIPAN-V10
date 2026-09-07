@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TRIPAN V10 — Travel Smarter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"  />
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="toast"></div>
+<header class="nav">
+  <a class="brand" href="#" onclick="showPage('home')"><span>✦</span> TRIPAN</a>
+  <nav>
+    <a href="#" data-i18n="home" onclick="showPage('home')">Home</a>
+    <a href="#" data-i18n="explore" onclick="showPage('explore')">Explore</a>
+    <a href="#" data-i18n="plan" onclick="showPage('plan')">Plan My Trip</a>
+    <a href="#" data-i18n="services" onclick="showPage('services')">Services</a>
+    <a href="#" data-i18n="myTrips" onclick="showPage('mytrips')">My Trips</a>
+  </nav>
+  <div class="nav-actions">
+    <select id="language" onchange="changeLanguage(this.value)" aria-label="Language">
+      <option value="en">English</option><option value="te">తెలుగు</option><option value="hi">हिन्दी</option>
+    </select>
+    <button class="btn btn-outline" onclick="openModal('login')">Login</button>
+  </div>
+</header>
+
+<main>
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow" data-i18n="smartTourism">SMART TOURISM • INDIA</div>
+      <h1><span data-i18n="travelSmarter">Travel smarter.</span><br><span data-i18n="experienceMore">Experience more.</span></h1>
+      <p>Discover destinations, build personalized itineraries, find stays and food, navigate locally, and travel with confidence — all in one place.</p>
+      <div class="hero-buttons"><button class="btn btn-primary" onclick="showPage('plan')">Plan My Trip <b>→</b></button><button class="btn btn-ghost" onclick="showPage('explore')">Explore destinations</button></div>
+      <div class="hero-stats"><div><b id="destinationCount">18+</b><small data-i18n="destinations">Destinations</small></div><div><b>30+</b><small>Experiences</small></div><div><b>1</b><small>Smart platform</small></div></div>
+    </div>
+    <div class="hero-art"><div class="floating-card top">🌦️ <b>Weather-aware</b><small>Plan around conditions</small></div><div class="map-orb"><div class="pin p1">📍</div><div class="pin p2">📍</div><div class="route"></div><div class="orb-label">INDIA<br><small>Explore your way</small></div></div><div class="floating-card bottom">🤖 <b>Smart itinerary</b><small>Personalized to you</small></div></div>
+  </div>
+  <div class="section-head"><div><span class="eyebrow">DISCOVER</span><h2>Where will you go next?</h2></div><button class="text-btn" onclick="showPage('explore')">View all →</button></div>
+  <div id="homeDestinations" class="destination-grid"></div>
+  <section class="feature-banner"><div><span class="eyebrow">ONE PLATFORM</span><h2>From “Where should I go?” to “I’m ready.”</h2><p>TRIPAN connects discovery, planning and local travel services into one simple journey.</p></div><button class="btn btn-primary" onclick="showPage('plan')">Build my itinerary →</button></section>
+</section>
+
+<section id="explore" class="page">
+  <div class="page-heading"><span class="eyebrow">DISCOVER INDIA</span><h1 data-i18n="exploreDestinations">Explore destinations</h1><p>Find places that match your mood, budget and interests.</p></div>
+  <div class="filterbar"><input id="searchDest" placeholder="🔎 Search destinations..." oninput="renderExplore()"><div class="chips"><button class="chip active" onclick="filterDest('all',this)">All</button><button class="chip" onclick="filterDest('Beach',this)">🏖️ Beach</button><button class="chip" onclick="filterDest('Nature',this)">🌿 Nature</button><button class="chip" onclick="filterDest('Heritage',this)">🏛️ Heritage</button><button class="chip" onclick="filterDest('Adventure',this)">🧗 Adventure</button></div></div>
+  <div id="exploreGrid" class="destination-grid"></div>
+</section>
+
+<section id="destination" class="page"><div id="destinationDetail"></div></section>
+
+<section id="plan" class="page">
+  <div class="page-heading"><span class="eyebrow">SMART PLANNING</span><h1 data-i18n="planPerfectTrip">Plan your perfect trip</h1><p>Tell us what you want. TRIPAN builds a practical day-by-day itinerary.</p></div>
+  <div class="planner-intro">
+    <div class="planner-intro-main"><span class="planner-intro-icon">✦</span><div><b>Build your trip in one place</b><p>Choose a destination, set your dates and budget, then tell TRIPAN what you enjoy. We turn it into a clear daily route with weather, timing and estimated spend.</p></div></div>
+    <div class="planner-intro-points"><span>🌦️ Live weather</span><span>🗺️ Smart map</span><span>📅 Day-by-day plan</span><span>💰 Budget-aware</span></div>
+  </div>
+  <div class="planner">
+    <div class="planner-form card">
+      <h3 data-i18n="tripPreferences">Trip preferences</h3>
+      <label><span data-i18n="destination">Destination</span><select id="planDestination"></select></label>
+      <label><span data-i18n="departureDate">Departure date</span><input id="startDate" type="date"><small class="date-hint" data-i18n="dateHint">Choose the day you actually start your trip. Return date is calculated from trip length.</small><span id="dateSummary" class="date-summary"></span></label>
+      <div class="two"><label><span data-i18n="numberOfDays">Number of days</span><input id="days" type="number" min="1" max="7" value="3"></label><label><span data-i18n="budget">Budget (₹ per person)</span><input id="budget" type="number" min="1000" value="15000"><small id="budgetHint" class="budget-hint">Enter the amount available for one person for the full local trip.</small></label></div>
+      <div class="two"><label><span data-i18n="travelling">Who is travelling?</span><select id="travellers"><option>Solo</option><option>Couple</option><option>Family</option><option>Friends</option></select></label><label><span>Number of people</span><input id="travellerCount" type="number" min="1" max="10" value="1"></label></div>
+      <div class="two"><label><span data-i18n="pace">Trip pace</span><select id="pace"><option value="Relaxed">Relaxed</option><option value="Balanced" selected>Balanced</option><option value="Packed">Packed</option></select></label><label><span data-i18n="stay">Stay style</span><select id="stay"><option value="Budget">Budget</option><option value="Mid-range" selected>Mid-range</option><option value="Premium">Premium</option></select></label></div>
+      <label><span data-i18n="interests">Interests</span> <span class="hint" data-i18n="selectAll">Select all that apply</span></label>
+      <div class="interest-grid"><label class="check"><input type="checkbox" value="Beach"> 🏖️ Beach</label><label class="check"><input type="checkbox" value="Nature"> 🌿 Nature</label><label class="check"><input type="checkbox" value="Heritage"> 🏛️ Heritage</label><label class="check"><input type="checkbox" value="Adventure"> 🧗 Adventure</label><label class="check"><input type="checkbox" value="Culture"> 🎭 Culture</label><label class="check"><input type="checkbox" value="Food"> 🍛 Food</label></div>
+      <button class="btn btn-primary full" onclick="generateTrip()" data-i18n="generate">✨ Generate my itinerary</button>
+    </div>
+    <div class="smart-live card"><div class="live-head"><div><span class="eyebrow">LIVE DATA</span><h3>🌦️ Weather + Map intelligence</h3></div><span id="weatherStatus" class="live-pill">Waiting for destination</span></div><div id="weatherPanel" class="weather-panel"><div class="weather-placeholder">Choose a destination to load live weather.</div></div><div id="plannerMap" class="planner-map"></div></div>
+    <div id="recommendationPanel" class="recommendation-panel"></div><div id="itinerary" class="itinerary card"><div class="empty"><div class="empty-icon">🧳</div><h3>Your trip starts here</h3><p>Choose your destination, budget and interests. Your personalized itinerary will appear here.</p></div></div>
+  </div>
+</section>
+
+<section id="services" class="page">
+  <div class="page-heading"><span class="eyebrow" data-i18n="travelEssentials">TRAVEL ESSENTIALS</span><h1 data-i18n="everything">Everything you need on the road</h1><p>Useful local services, organized in one place.</p></div>
+  <div class="service-grid">
+    <button class="service-card" onclick="showService('hotels')"><span>🏨</span><h3 data-i18n="hotels">Hotels</h3><p><span data-i18n="hotelDesc">Browse stays by destination, price and rating.</span></p><b><span data-i18n="exploreStays">Explore stays →</span></b></button>
+    <button class="service-card" onclick="showService('restaurants')"><span>🍛</span><h3 data-i18n="restaurants">Restaurants</h3><p><span data-i18n="restaurantDesc">Discover local cuisines and places to eat.</span></p><b><span data-i18n="findFood">Find food →</span></b></button>
+    <button class="service-card" onclick="showService('transport')"><span>🚌</span><h3 data-i18n="transport">Transport</h3><p><span data-i18n="transportDesc">Understand the best ways to move around.</span></p><b><span data-i18n="seeOptions">See options →</span></b></button>
+    <button class="service-card emergency" onclick="showEmergency()"><span>🚨</span><h3 data-i18n="emergency">Emergency</h3><p><span data-i18n="emergencyDesc">Quick access to important safety resources.</span></p><b><span data-i18n="getHelp">Get help →</span></b></button><button class="service-card" onclick="showFavorites()"><span>❤️</span><h3 data-i18n="favorites">Favorites</h3><p><span data-i18n="favoriteDesc">Your saved destinations in one place.</span></p><b><span data-i18n="viewFavorites">View favorites →</span></b></button><button class="service-card" onclick="showFeedback()"><span>💬</span><h3 data-i18n="feedback">Feedback</h3><p><span data-i18n="feedbackDesc">Help us improve TRIPAN for travelers.</span></p><b><span data-i18n="shareFeedback">Share feedback →</span></b></button><button id="adminServiceCard" class="service-card" style="display:none" onclick="showAdmin()"><span>📊</span><h3 data-i18n="admin">Admin</h3><p><span data-i18n="adminDesc">SIH demo dashboard for platform analytics.</span></p><b><span data-i18n="openDashboard">Open dashboard →</span></b></button>
+  </div>
+  <div id="serviceContent" class="service-content"></div>
+  <div class="architecture-card">
+    <span class="eyebrow">TRIPAN V10 • SMART TRAVEL ECOSYSTEM</span>
+    <h2>One journey, one connected platform.</h2>
+    <div class="architecture-flow"><span>Tourist</span><b>→</b><span>TRIPAN UI</span><b>→</b><span>Express API</span><b>→</b><span>Persistent Data</span></div>
+    <p>V5 adds date-aware planning, multilingual travel data, more Indian destinations, traveler pace and stay preferences, personalized recommendations, favorites, feedback, emergency resources and admin analytics. Weather-aware itinerary planning and persistent authentication remain connected to the backend.</p>
+  </div>
+</section>
+
+<section id="mytrips" class="page">
+  <div class="page-heading"><span class="eyebrow" data-i18n="yourJourneys">YOUR JOURNEYS</span><h1 data-i18n="myTripsTitle">My Trips</h1><p>Your saved itineraries, ready whenever you are.</p></div>
+  <div id="savedTrips" class="saved-grid"></div>
+</section>
+</main>
+
+<footer><div class="brand"><span>✦</span> TRIPAN</div><p>Discover. Plan. Travel smarter.</p><div>© 2026 TRIPAN • SIH Prototype</div></footer>
+
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
+<script src="/script.js"></script>
+</body>
+</html>
