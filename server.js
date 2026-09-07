@@ -477,25 +477,83 @@ function weatherCondition(code) {
   return "Unknown";
 }
 
+const weatherCache = new Map();
+
 async function getWeather(lat, lng, startDate, days = 5) {
   const safeDays = Math.min(Math.max(Number(days) || 5, 1), 16);
+  const key = `${lat},${lng},${startDate || "auto"},${safeDays}`;
+
+  // Use cached weather for 30 minutes
+  const cached = weatherCache.get(key);
+  if (cached && Date.now() - cached.time < 30 * 60 * 1000) {
+    return cached.data;
+  }
+
   const params = new URLSearchParams({
-    latitude: String(lat),
-    longitude: String(lng),
+    latitude: lat,
+    longitude: lng,
     daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
     timezone: "auto"
   });
+
   if (startDate) {
-    params.set("start_date", String(startDate));
-    params.set("end_date", dateAdd(String(startDate), safeDays - 1));
+    params.set("start_date", startDate);
+    params.set("end_date", dateAdd(startDate, safeDays - 1));
   } else {
-    params.set("forecast_days", String(Math.max(safeDays, 7)));
+    params.set("forecast_days", String(safeDays));
   }
 
-  const url = "https://api.open-meteo.com/v1/forecast?" + params.toString();
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Weather provider returned ${response.status}`);
-  return response.json();
+  const url = `https://api.open-meteo.com/v1/forecast?${params}`;
+
+  let lastError;
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const response = await fetch(url);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        weatherCache.set(key, {
+          time: Date.now(),
+          data
+        });
+
+        return data;
+      }
+
+      lastError = new Error(
+        `Weather provider returned ${response.status}`
+      );
+
+      if (response.status === 429 && attempt < 3) {
+        console.log(`Weather rate limited. Retry ${attempt}/3...`);
+        await new Promise(resolve =>
+          setTimeout(resolve, attempt * 3000)
+        );
+        continue;
+      }
+
+      break;
+
+    } catch (error) {
+      lastError = error;
+
+      if (attempt < 3) {
+        await new Promise(resolve =>
+          setTimeout(resolve, attempt * 1000)
+        );
+      }
+    }
+  }
+
+  // Use older cached weather if provider is temporarily unavailable
+  if (cached) {
+    console.log("Using cached weather because provider is unavailable.");
+    return cached.data;
+  }
+
+  throw lastError || new Error("Weather provider unavailable");
 }
 
 app.get("/api/weather/:id", async (req, res) => {

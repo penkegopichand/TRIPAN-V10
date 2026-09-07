@@ -1,0 +1,197 @@
+{
+  "users": [
+    {
+      "id": "9570e752-5f4a-40ab-90cd-60c4ee15a254",
+      "name": "mahesh",
+      "email": "mahesh@gmail.com",
+      "passwordHash": "$2a$12$3KXF1U.rNZu4q4zJiF4vNuoIB4rHtLDEQ04SXIivrRFVAeDYAa/vu",
+      "createdAt": "2026-09-05T04:01:41.513Z"
+    },
+    {
+      "id": "6f908792-61c3-413b-926b-cff589a6a870",
+      "name": "Gopichand",
+      "email": "p@gmail.com",
+      "passwordHash": "$2a$12$AIeiKVU05G9txfg8n0W4Iu6OFcE.LINH/3PVo2j.9R1k3qOmCCuD6",
+      "createdAt": "2026-09-06T05:40:54.832Z"
+    },
+    {
+      "id": "cb2fdbd7-8c1c-46f8-ae37-a66519c6c32a",
+      "name": "cc",
+      "email": "c@gmail.com",
+      "passwordHash": "$2a$12$4/9mYvWtJDAhlO/gI67wB.o8bzlqQj/sLixMywd8/39HaP9bK0tQ6",
+      "createdAt": "2026-09-06T12:33:38.727Z"
+    }
+  ],
+  "trips": [
+    {
+      "id": "1427b121-7719-4192-b9db-06bd68502c09",
+      "userId": "cb2fdbd7-8c1c-46f8-ae37-a66519c6c32a",
+      "destination": "Araku Valley",
+      "destinationId": "09f26677-701d-445b-9481-fa71b47ae773",
+      "startDate": "2026-09-11",
+      "endDate": "2026-09-13",
+      "days": 3,
+      "budget": 1000,
+      "estimatedDailySpend": 333,
+      "pace": "Relaxed",
+      "stay": "Budget",
+      "interests": [
+        "Beach",
+        "Nature",
+        "Heritage",
+        "Adventure",
+        "Culture",
+        "Food"
+      ],
+      "travellers": "Solo",
+      "weatherAware": true,
+      "rainDays": 3,
+      "weatherSource": "Open-Meteo",
+      "aiProvider": "TRIPAN Local Planner",
+      "aiModel": null,
+      "generationMode": "local",
+      "itinerary": [
+        {
+          "day": 1,
+          "date": "2026-09-11",
+          "dateLabel": "Fri, 11 Sept",
+          "weather": {
+            "date": "2026-09-11",
+            "max": 24,
+            "min": 21,
+            "rainChance": 96,
+            "code": 55,
+            "condition": "Drizzle"
+          },
+          "estimatedSpend": 333,
+          "activityFees": 414,
+          "budgetAllocation": {
+            "stay": 117,
+            "food": 83,
+            "transport": 50,
+            "activities": 50,
+            "buffer": 33
+          },
+          "totalHours": 4.8,
+          "items": [
+            {
+              "time": "09:00",
+              "period": "Morning",
+              "place": "Borra Caves",
+              "category": "Nature",
+              "icon": "\ud83c\udf3f",
+              "note": "Large limestone caves famous for impressive rock formations and underground chambers. Entry fee approx. \u20b960. Best planned within this time window for a comfortable day.",
+              "durationHours": 2.5,
+              "estimatedCost": 227
+            },
+            {
+              "time": "13:30",
+              "period": "Afternoon",
+              "place": "Araku Tribal Museum",
+              "category": "Culture",
+              "icon": "\ud83c\udfad",
+              "note": "Museum showcasing the tribal lifestyle, traditions and culture of the Araku region. Entry fee approx. \u20b920. Rain-aware timing: keep this activity flexible and carry rain protection.",
+              "durationHours": 2.25,
+              "estimatedCost": 187
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "date": "2026-09-12",
+          "dateLabel": "Sat, 12 Sept",
+          "weather": {
+            "date": "2026-09-12",
+            "max": 28,
+            "min": 21,
+            "rainChance": 99,
+            "code": 95,
+            "condition": "Thunderstorm"
+          },
+          "estimatedSpend": 333,
+          "activityFees": 334,
+          "budgetAllocation": {
+            "stay": 117,
+            "food": 83,
+            "transport": 50,
+            "activities": 50,
+            "buffer": 33
+          },
+          "totalHours": 4.8,
+          "items": [
+            {
+              "time": "09:00",
+              "period": "Morning",
+              "place": "Matsyagundam",
+              "category": "Nature",
+              "icon": "\ud83c\udf3f",
+              "note": "Visit a small scenic water and temple area. Best planned within this time window for a comfortable day.",
+              "durationHours": 2.5,
+              "estimatedCost": 167
+            },
+            {
+              "time": "13:30",
+              "period": "Afternoon",
+              "place": "Dhimsa Dance Village Experience",
+              "category": "Culture",
+              "icon": "\ud83c\udfad",
+              "note": "Experience a traditional local cultural performance when available. Rain-aware timing: keep this activity flexible and carry rain protection.",
+              "durationHours": 2.25,
+              "estimatedCost": 167
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "date": "2026-09-13",
+          "dateLabel": "Sun, 13 Sept",
+          "weather": {
+            "date": "2026-09-13",
+            "max": 25,
+            "min": 20,
+            "rainChance": 99,
+            "code": 53,
+            "condition": "Drizzle"
+          },
+          "estimatedSpend": 333,
+          "activityFees": 334,
+          "budgetAllocation": {
+            "stay": 117,
+            "food": 83,
+            "transport": 50,
+            "activities": 50,
+            "buffer": 33
+          },
+          "totalHours": 5.5,
+          "items": [
+            {
+              "time": "09:00",
+              "period": "Morning",
+              "place": "Duduma Waterfalls Excursion",
+              "category": "Nature",
+              "icon": "\ud83c\udf3f",
+              "note": "Take a longer nature excursion toward the Duduma falls region. Best planned within this time window for a comfortable day.",
+              "durationHours": 2.5,
+              "estimatedCost": 167
+            },
+            {
+              "time": "13:30",
+              "period": "Afternoon",
+              "place": "Galiconda Peak Area",
+              "category": "Adventure",
+              "icon": "\ud83e\uddd7",
+              "note": "Explore the highland scenery around the Eastern Ghats. Rain-aware timing: keep this activity flexible and carry rain protection.",
+              "durationHours": 3,
+              "estimatedCost": 167
+            }
+          ]
+        }
+      ],
+      "generatedAt": "2026-09-06T12:25:47.452Z",
+      "createdAt": "2026-09-06T12:37:47.706Z"
+    }
+  ],
+  "favorites": [],
+  "sessions": [],
+  "feedback": []
+}

@@ -414,7 +414,7 @@ async function loginUser(){
 }
 async function registerUser(){
   try{
-    const d=await api("/api/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("authName").value,email:$("authEmail").value,password:$("authPassword").value,language:currentLang})});
+    const d =await api("/api/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("authName").value,email:$("authEmail").value,password:$("authPassword").value,language:currentLang})});
     localStorage.setItem("tripanToken",d.token);localStorage.setItem("tripanUserData",JSON.stringify(d.user));closeModal();updateNavUser(d.user);toast("Account created! 🎉");
   }catch(e){toast(e.message||"Registration failed. Use a valid email and 6+ character password.")}
 }
