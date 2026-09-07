@@ -16,7 +16,7 @@ const ADMIN_EMAILS = String(process.env.ADMIN_EMAILS || process.env.ADMIN_EMAIL 
   .map(email => email.trim().toLowerCase())
   .filter(Boolean);
 
-function isAdminUser(user) {a
+function isAdminUser(user) {
   return Boolean(user?.email && ADMIN_EMAILS.includes(String(user.email).trim().toLowerCase()));
 }
 
